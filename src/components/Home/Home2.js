@@ -74,7 +74,7 @@ function Home2() {
               </li>
               <li className="social-icons">
                 <a
-                  href="hv2003789@gmail.com"
+                  href="mailto:hv2003789@gmail.com"
                   target="_blank"
                   rel="noreferrer"
                   className="icon-colour  home-social-icons"
@@ -94,7 +94,7 @@ function Home2() {
               </li>
               <li className="social-icons">
                 <a
-                  href="https://www.instagram.com/harsha_vardhan.04"
+                  href="https://www.instagram.com/hv789_"
                   target="_blank"
                   rel="noreferrer"
                   className="icon-colour home-social-icons"
