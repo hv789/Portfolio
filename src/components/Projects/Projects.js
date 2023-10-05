@@ -6,6 +6,7 @@ import hmp from "../../Assets/Projects/hmp.png";
 import smartnaka from "../../Assets/Projects/smartnaka.png";
 import gc from "../../Assets/Projects/gc.png";
 import wiss from "../../Assets/Projects/wiss.png";
+import echochat from "../../Assets/Projects/echochat.png";
 
 function Projects() {
   return (
@@ -27,6 +28,17 @@ function Projects() {
               description="AirBorneX is a web application developed for a drone delivery company to facilitate efficient and timely deliveries. This web application provides a user-friendly interface for users to request drone deliveries and track their packages in real-time. The application also provides admins with the necessary tools to manage all delivery requests efficiently and ensure timely deliveries."
               ghLink="https://github.com/SamMathelete/gc-webathon"
               demoLink="https://gc-webathon.vercel.app/"
+            />
+          </Col>
+
+          <Col md={4} className="project-card">
+            <ProjectCard
+              imgPath={echochat}
+              isBlog={false}
+              title="EchoChat"
+              description="EchoChat is a versatile chatting platform designed to make your online interactions both engaging and effortless. Whether you're sending text messages, sharing videos, or participating in live video chats, EchoChat ensures you stay connected with your friends, family, and colleagues in a seamless and creative way."
+              ghLink="https://github.com/hv789/chatApp-IMBY-SE"
+              demoLink="https://echochat.vercel.app/"
             />
           </Col>
 
