@@ -10,7 +10,7 @@ function AboutCard() {
           <p style={{ textAlign: "justify" }}>
             Hi Everyone, I am <span className="purple">Harsha Vardhan </span>
             from <span className="purple"> Bhubaneswar, India.</span>
-            <br /> I am a pre-final year student pursuing Bachelor of Technology in 
+            <br /> I am a final year student pursuing Bachelor of Technology in 
             Electronics and Communication Engineering at IIT Bhubaneswar.
             <br />
             Additionally, I am highly interested in web and app development and have worked on 
