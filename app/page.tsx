@@ -1,7 +1,6 @@
-import CallToRecord from "@/components/CallToRecord";
 import Effects from "@/components/Effects";
 import SplitText from "@/components/SplitText";
-import { about, clients, experience, marquee, profile, stats, work } from "@/lib/content";
+import { about, clients, experience, faq, marquee, now, profile, stats, work } from "@/lib/content";
 
 const Arrow = () => (
   <svg viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -38,12 +37,13 @@ export default function Home() {
             </span>
           </a>
           <nav aria-label="Primary" className="nav__links hidden md:flex">
-            <a href="#work">work</a>
             <a href="#about">about</a>
+            <a href="#now">now</a>
+            <a href="#work">work</a>
             <a href="#experience">experience</a>
-            <a href="#contact">contact</a>
+            <a href="#faq">faq</a>
           </nav>
-          <a href={`mailto:${profile.email}`} className="btn btn--ghost !px-4 !py-2.5" data-magnetic>
+          <a href="#contact" className="btn btn--ghost !px-4 !py-2.5" data-magnetic>
             Get in touch
           </a>
         </div>
@@ -56,49 +56,48 @@ export default function Home() {
             <div data-parallax="title">
               <span className="pill pill--live reveal is-in">
                 <span className="dot" aria-hidden />
-                Open to AI Engineer roles · Japan / India / remote
+                Open to AI Engineer, Forward-Deployed Engineer and Software Engineer roles
               </span>
               <SplitText
                 as="h1"
                 className="hero__title"
-                label="I build voice agents and agentic systems for Japanese enterprises, shipped to production."
+                label="I build voice agents and agentic systems for enterprises, shipped to production."
                 parts={[
                   { text: "I build " },
                   { text: "voice agents", className: "c-teal" },
                   { text: " & " },
                   { text: "agentic systems", className: "c-lime" },
                   { text: " for " },
-                  { text: "Japanese enterprises,", className: "c-amber" },
+                  { text: "enterprises,", className: "c-amber" },
                   { text: " shipped to production.", className: "serif" },
                 ]}
               />
             </div>
-            <div className="hero__grid">
-              <div>
-                <p className="hero__sub" data-reveal>
-                  AI Engineer at <b>I&rsquo;mbesideyou</b> (Tokyo). My agents phone employees and file their daily
-                  reports for <b>DeCoA</b> and <b>Mitsubishi Motors</b>, and learn how back-office work gets done for{" "}
-                  <b>NTT DATA</b> and <b>Toyota</b>, then automate it.
-                </p>
-                <div className="hero__meta" data-reveal>
-                  <span className="pill">
-                    <strong>¥23M+</strong> monthly revenue across my products
-                  </span>
-                  <span className="pill">ex-ZS Associates</span>
-                  <span className="pill">IIT Bhubaneswar &rsquo;25</span>
-                </div>
-                <div className="hero__cta" data-reveal>
-                  <a href="#work" className="btn btn--primary" data-magnetic>
-                    See selected work <Arrow />
-                  </a>
-                  <a href={profile.resume} className="btn btn--ghost" data-magnetic>
-                    Download resume
-                  </a>
-                </div>
-              </div>
-              <div data-parallax="card">
-                <CallToRecord />
-              </div>
+            <p className="hero__sub" data-reveal>
+              AI Engineer at <b>I&rsquo;mbesideyou</b> (Tokyo). I build voice agents that phone employees and turn
+              what they say into structured reports and analytics, and multi-agent systems that learn how back-office
+              work actually gets done, then <b>automate it</b>.
+            </p>
+            <div className="hero__meta" data-reveal>
+              <a href="#now" className="pill pill--live">
+                <span className="dot" aria-hidden />
+                <span>
+                  Now building <strong>an agentic process-mining platform</strong>
+                </span>
+              </a>
+              <span className="pill">
+                <strong>¥23M+</strong> monthly revenue across my products
+              </span>
+              <span className="pill">ex-ZS Associates</span>
+              <span className="pill">IIT Bhubaneswar &rsquo;25</span>
+            </div>
+            <div className="hero__cta" data-reveal>
+              <a href="#work" className="btn btn--primary" data-magnetic>
+                See selected work <Arrow />
+              </a>
+              <a href={profile.resume} className="btn btn--ghost" data-magnetic>
+                Download resume
+              </a>
             </div>
           </div>
 
@@ -110,6 +109,61 @@ export default function Home() {
                 </span>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ---------------- about ---------------- */}
+        <section id="about" className="section">
+          <div className="wrap">
+            <SectionHead num="01" title="About" hint="who, what, how" />
+            <p className="lead" data-reveal>
+              {about.lead.map((l, i) => (l.mark ? <mark key={i}>{l.text}</mark> : <span key={i}>{l.text}</span>))}
+            </p>
+            <div className="cards cards--3">
+              {about.cards.map((c) => (
+                <div key={c.title} className="card reveal" data-reveal data-tilt>
+                  <p className="card__kicker">{c.kicker}/</p>
+                  <h3>{c.title}</h3>
+                  <p>{c.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- now building ---------------- */}
+        <section id="now" className="section">
+          <div className="wrap">
+            <SectionHead num="02" title="Now building" hint="in production, growing" />
+            <article className="card now reveal" data-reveal data-tilt>
+              <div className="work__head">
+                <span className="inline-flex items-center gap-2 text-lime">
+                  <span className="dot" aria-hidden /> In progress · 2026
+                </span>
+                <span>I&rsquo;mbesideyou</span>
+              </div>
+              <div className="now__grid">
+                <div>
+                  <h3 className="work__title">{now.title}</h3>
+                  <p className="mt-3 max-w-[60ch] text-[15.5px] leading-relaxed">{now.summary}</p>
+                  <div className="tags mt-6">
+                    {now.tags.map((t, i) => (
+                      <span key={t} className={`tag ${["tag--lime", "tag--teal", "tag--amber"][i] ?? ""}`}>
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="card__kicker">What I&rsquo;m working on/</p>
+                  <ul className="work__points !mt-0">
+                    {now.doing.map((d) => (
+                      <li key={d}>{d}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </article>
           </div>
         </section>
 
@@ -126,7 +180,7 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <div className="stats mt-14">
+            <div className="stats stats--3 mt-14">
               {stats.map((s) => (
                 <div key={s.label} className="stat reveal" data-reveal>
                   <div className="stat__num">
@@ -144,7 +198,7 @@ export default function Home() {
         {/* ---------------- work ---------------- */}
         <section id="work" className="section">
           <div className="wrap">
-            <SectionHead num="01" title="Selected work" hint="production, for real clients" />
+            <SectionHead num="03" title="Selected work" hint="production, for real clients" />
             <div className="cards cards--2 !mt-0">
               {work.map((w, i) => (
                 <article key={w.title} className="card reveal" data-reveal data-tilt>
@@ -173,29 +227,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---------------- about ---------------- */}
-        <section id="about" className="section">
-          <div className="wrap">
-            <SectionHead num="02" title="About" hint="who, what, how" />
-            <p className="lead" data-reveal>
-              {about.lead.map((l, i) => (l.mark ? <mark key={i}>{l.text}</mark> : <span key={i}>{l.text}</span>))}
-            </p>
-            <div className="cards cards--3">
-              {about.cards.map((c) => (
-                <div key={c.title} className="card reveal" data-reveal data-tilt>
-                  <p className="card__kicker">{c.kicker}/</p>
-                  <h3>{c.title}</h3>
-                  <p>{c.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ---------------- experience ---------------- */}
         <section id="experience" className="section">
           <div className="wrap">
-            <SectionHead num="03" title="Experience" hint="2 companies, 1 IIT" />
+            <SectionHead num="04" title="Experience" hint="2 companies, 1 IIT" />
             <ol className="timeline">
               {experience.map((e) => (
                 <li key={e.org} className="t-item reveal" data-reveal>
@@ -220,9 +255,9 @@ export default function Home() {
         </section>
 
         {/* ---------------- contact ---------------- */}
-        <section id="contact" className="section pb-24">
+        <section id="contact" className="section">
           <div className="wrap">
-            <SectionHead num="04" title="Contact" hint="fastest: email" />
+            <SectionHead num="05" title="Contact" hint="fastest: email" />
             <p className="c-big" data-reveal>
               Building agents that have to work in production? <span className="serif c-lime">Let&rsquo;s talk.</span>
             </p>
@@ -249,6 +284,24 @@ export default function Home() {
                 <span className="c-row__value">Harsha_Vardhan_Resume.pdf</span>
                 <span className="c-row__action">Download</span>
               </a>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------------- faq ---------------- */}
+        <section id="faq" className="section pb-24">
+          <div className="wrap">
+            <SectionHead num="06" title="FAQ" hint="quick answers" />
+            <div className="faq">
+              {faq.map((f) => (
+                <details key={f.q} className="faq__item reveal" data-reveal>
+                  <summary>
+                    <span>{f.q}</span>
+                    <span className="faq__icon" aria-hidden />
+                  </summary>
+                  <p>{f.a}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>

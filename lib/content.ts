@@ -20,13 +20,25 @@ export const marquee = [
   "Rust / Tauri", "FastAPI", "TypeScript", "AWS CDK", "Firebase", "Databricks",
 ];
 
+export const now = {
+  title: "An agentic process-mining platform",
+  summary:
+    "Enterprise teams don't know which of their workflows are worth automating. The platform watches how work actually happens on employees' desktops, mines the real processes, and turns them into shipped automations, with AI agents doing the heavy lifting and humans approving every step.",
+  doing: [
+    "Desktop capture agent in Rust/Tauri and the event contract the AI pipeline is built on",
+    "Multi-agent automation delivery on Claude: evidence → process maps → generated, tested automations",
+    "Human-in-the-loop operator Q&A that sends model gaps back to the people who do the work",
+    "Identity, MFA and tenant isolation across the product family",
+  ],
+  tags: ["Claude", "MCP", "LLM-as-judge evals", "Rust / Tauri", "FastAPI", "AWS"],
+};
+
 export const clients = ["NTT DATA", "Toyota", "Mitsubishi Motors", "DeCoA", "Amgen"];
 
 export const stats = [
   { prefix: "¥", value: 23, suffix: "M+", label: "monthly revenue across the two AI products I build for" },
-  { prefix: "", value: 5, suffix: "", label: "enterprise clients, from Toyota to Amgen" },
-  { prefix: "", value: 200, suffix: "", label: "simultaneous calls handled by my concurrency limiter, 0 errors" },
-  { prefix: "", value: 83, suffix: " ms", label: "desktop frame capture, down from 2–8 s" },
+  { prefix: "", value: 5, suffix: "", label: "enterprise clients across automotive, IT services and healthcare" },
+  { prefix: "", value: 2, suffix: "", label: "AI products in production that I've built core systems for" },
 ];
 
 export const about = {
@@ -73,7 +85,7 @@ export const work: Work[] = [
     summary:
       "Voice agents call each employee, take a spoken daily report in Japanese, and turn it into structured reports, HR analytics and early wellbeing signals. I owned the platform end to end.",
     points: [
-      "Call-concurrency limiter on Firestore transactions: 0 errors at 200 simultaneous requests",
+      "Distributed call-concurrency control so bursts of calls across tenants are queued, never dropped",
       "Anonymous compliance hotline with privacy-minimal server-side tools",
       "Japanese speech tuning (custom vocabulary, endpointing) and per-tenant LLM spend caps",
     ],
@@ -89,9 +101,9 @@ export const work: Work[] = [
     summary:
       "A Windows agent that records how back-office teams actually work, so the platform can map processes and find what to automate. I designed and built the agent and led the event contract the OCR/LLM pipeline is built on.",
     points: [
-      "Frame capture cut from 2–8 s to ~83 ms",
+      "Runs unattended on locked-down corporate PCs with signed auto-update",
       "UI Automation, Office and browser signals instead of screenshot OCR: coverage 62.5% → 87%",
-      "Proxy-proof uploads and signed auto-update for locked-down corporate networks: 0/12 → 12/12",
+      "Proxy-proof, offline-first uploads that work behind enterprise network restrictions",
     ],
     tags: [{ label: "Rust", tone: "amber" }, { label: "Tauri 2", tone: "lime" }, { label: "UI Automation" }, { label: "COM" }, { label: "Chrome MV3" }, { label: "FastAPI", tone: "teal" }],
   },
@@ -158,5 +170,32 @@ export const experience = [
     org: "IIT Bhubaneswar",
     role: "B.Tech, Electronics and Communication Engineering",
     bullets: ["JEE Advanced 2021: All India Rank 3,348 of 1.4M+", "Inter-IIT Tech Meet 11.0: silver and bronze medals"],
+  },
+];
+
+export const faq = [
+  {
+    q: "What roles are you open to?",
+    a: "AI Engineer, Forward-Deployed Engineer and Software Engineer roles where I can build agentic and LLM systems that real users depend on. I'm open on location: on-site, hybrid or remote, in any country.",
+  },
+  {
+    q: "What do you actually build?",
+    a: "Production AI systems end to end: voice agents that take calls and turn speech into structured data, multi-agent pipelines that read messy enterprise evidence and produce automations, and the unglamorous parts around them (auth, data pipelines, desktop agents, deployment).",
+  },
+  {
+    q: "How do you make agents reliable in production?",
+    a: "Provenance on every fact an agent writes, boolean LLM-as-judge checks with golden and holdout sets, deterministic code for anything that can be computed, human approval gates before anything reaches a client, and a cost ledger per run with model routing to keep spend bounded.",
+  },
+  {
+    q: "Have you worked directly with enterprise clients?",
+    a: "Yes. My current work is for large Japanese enterprises across automotive and IT services, which means locked-down corporate networks, Japanese-language AI and strict data privacy. At ZS Associates I worked on a $2M analytics program for a healthcare client.",
+  },
+  {
+    q: "What's your core stack?",
+    a: "Python and TypeScript, Claude and OpenAI APIs, MCP, Langfuse, Vapi and Twilio for voice, FastAPI, PostgreSQL, Firebase, Rust/Tauri for desktop, and AWS (CDK, ECS, Lambda) for infrastructure.",
+  },
+  {
+    q: "What's the fastest way to reach you?",
+    a: "Email at hv2003789@gmail.com, or a message on LinkedIn.",
   },
 ];
