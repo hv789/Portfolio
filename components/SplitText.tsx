@@ -1,8 +1,27 @@
 // Renders text as per-character spans (with a running --i index) so CSS can
-// stagger a letter-by-letter reveal. Words stay unbroken. Server component.
+// stagger a letter-by-letter reveal. Each word stays unbroken and carries its
+// trailing space, so a wrapped line never starts with a stray space. Server component.
 import type { CSSProperties, ElementType } from "react";
 
 export type Part = { text: string; className?: string; br?: boolean };
+
+type Word = { text: string; className?: string; space: boolean; br: boolean };
+
+function toWords(parts: Part[]): Word[] {
+  const words: Word[] = [];
+  parts.forEach((p) => {
+    p.text.split(/(\s+)/).forEach((tok) => {
+      if (!tok) return;
+      if (/^\s+$/.test(tok)) {
+        if (words.length) words[words.length - 1].space = true;
+        return;
+      }
+      words.push({ text: tok, className: p.className, space: false, br: false });
+    });
+    if (p.br && words.length) words[words.length - 1].br = true;
+  });
+  return words;
+}
 
 export default function SplitText({
   parts,
@@ -19,22 +38,17 @@ export default function SplitText({
   const plain = label ?? parts.map((p) => p.text).join("");
   return (
     <Tag className={`split ${className}`} data-split aria-label={plain}>
-      {parts.map((p, pi) => (
-        <span key={pi} className={p.className} aria-hidden>
-          {p.text.split(/(\s+)/).map((word, wi) =>
-            /^\s+$/.test(word) ? (
-              " "
-            ) : (
-              <span key={wi} className="w">
-                {[...word].map((ch, ci) => (
-                  <span key={ci} className="ch" style={{ "--i": i++ } as CSSProperties}>
-                    {ch}
-                  </span>
-                ))}
+      {toWords(parts).map((w, wi) => (
+        <span key={wi} aria-hidden>
+          <span className={`w ${w.className ?? ""}`}>
+            {[...w.text].map((ch, ci) => (
+              <span key={ci} className="ch" style={{ "--i": i++ } as CSSProperties}>
+                {ch}
               </span>
-            ),
-          )}
-          {p.br ? <br /> : null}
+            ))}
+          </span>
+          {w.space ? " " : null}
+          {w.br ? <br /> : null}
         </span>
       ))}
     </Tag>

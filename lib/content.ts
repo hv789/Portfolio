@@ -1,5 +1,6 @@
-// All site copy lives here. Follow the public-copy rules in the job-search workspace
-// (profile/preferences.md) before editing.
+// All site copy lives here. Public-copy rules: never name internal products (describe the work
+// instead); client names and revenue figures shown here are approved for public use; keep
+// claims to what was actually built and shipped.
 
 export const profile = {
   name: "Harsha Vardhan",
