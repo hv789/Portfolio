@@ -8,14 +8,14 @@ const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrai
 const notoJp = Noto_Sans_JP({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-noto-jp", display: "swap", preload: false });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hv789.vercel.app"),
+  metadataBase: new URL("https://harshavardhan-dev.vercel.app"),
   title: "Harsha Vardhan, AI Engineer | Agentic AI, Voice AI, Production LLM Systems",
   description:
     "AI engineer building agentic systems, voice AI agents and production LLM systems for Japanese enterprises like NTT DATA, Toyota and Mitsubishi Motors.",
   openGraph: {
     title: "Harsha Vardhan, AI Engineer",
     description: "Agentic systems, voice AI agents and production LLM systems for Japanese enterprises.",
-    url: "https://hv789.vercel.app",
+    url: "https://harshavardhan-dev.vercel.app",
     siteName: "Harsha Vardhan",
     type: "website",
   },

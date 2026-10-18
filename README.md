@@ -1,4 +1,4 @@
-# hv789.vercel.app
+# harshavardhan-dev.vercel.app
 
 Personal site of Harsha Vardhan, AI Engineer (agentic AI, voice AI agents, production LLM systems).
 
