@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* 藍 ai-zome indigo on cool paper; a highlighter yellow marks what the agent extracts. */
+@theme {
+  --color-paper: #f5f7fb;
+  --color-panel: #ffffff;
+  --color-ink: #172340;
+  --color-body: #2c3447;
+  --color-muted: #5f6a82;
+  --color-rule: #dce1ec;
+  --color-ai: #2e4d8f;
+  --color-mark: #ffe58a;
+  --color-signal: #0f7f8a;
+
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-jp: var(--font-noto-jp), "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-paper: #0d1424;
+    --color-panel: #121b2f;
+    --color-ink: #eef2fa;
+    --color-body: #c9d1e3;
+    --color-muted: #8f99b1;
+    --color-rule: #24304a;
+    --color-ai: #9db4ec;
+    --color-mark: #6b5a17;
+    --color-signal: #4cc3cf;
+  }
+}
+
+@layer base {
+html {
+  background: var(--color-paper);
+  color: var(--color-body);
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-mark);
+  color: var(--color-ink);
+}
+
+a {
+  color: var(--color-ai);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ai);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+}
+
+@layer components {
+/* Hero parse animation: one orchestrated sequence, then still. */
+.seg {
+  transition: opacity 260ms ease, background-color 380ms ease;
+}
+.seg[data-shown="false"] {
+  opacity: 0.18;
+}
+.entity {
+  border-radius: 3px;
+  padding: 0 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.entity[data-marked="true"] {
+  background: var(--color-mark);
+  color: var(--color-ink);
+}
+.field {
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+.field[data-shown="false"] {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .seg,
+  .field {
+    transition: none;
+  }
+}
