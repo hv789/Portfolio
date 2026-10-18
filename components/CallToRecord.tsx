@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 
 // An illustrative call, parsed the way the voice-agent pipeline does it:
 // spoken Japanese → highlighted entities → a structured daily-report record.
-type Seg = { text: string; entity?: "task" | "meeting" | "wellbeing" };
+type Kind = "task" | "meeting" | "wellbeing";
+type Seg = { text: string; entity?: Kind };
 
 const SEGMENTS: Seg[] = [
   { text: "今日は" },
@@ -16,54 +17,62 @@ const SEGMENTS: Seg[] = [
   { text: "。" },
 ];
 
-const FIELDS = [
-  { key: "task", label: "task", value: "Quote preparation × 3" },
-  { key: "meeting", label: "meeting", value: "Client meeting, 60 min" },
-  { key: "wellbeing", label: "wellbeing", value: "Tired, suggest a check-in" },
-] as const;
+const FIELDS: { key: Kind; value: string; color: string }[] = [
+  { key: "task", value: "Quote preparation × 3", color: "text-lime" },
+  { key: "meeting", value: "Client meeting, 60 min", color: "text-teal" },
+  { key: "wellbeing", value: "Tired, suggest a check-in", color: "text-amber" },
+];
 
-const SEG_MS = 340;
+const SEG_MS = 320;
 const MARK_MS = 420;
+const BARS = [10, 16, 8, 14, 6, 12, 9];
 
 export default function CallToRecord() {
   const total = SEGMENTS.length;
-  const [shown, setShown] = useState(0); // segments revealed
-  const [marked, setMarked] = useState(0); // entities highlighted + fields filed
+  const [shown, setShown] = useState(0);
+  const [marked, setMarked] = useState(0);
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setShown(total);
       setMarked(FIELDS.length);
       return;
     }
     const timers: number[] = [];
-    SEGMENTS.forEach((_, i) => timers.push(window.setTimeout(() => setShown(i + 1), 400 + i * SEG_MS)));
-    const parseStart = 400 + total * SEG_MS + 300;
+    const t0 = 700;
+    SEGMENTS.forEach((_, i) => timers.push(window.setTimeout(() => setShown(i + 1), t0 + i * SEG_MS)));
+    const parseStart = t0 + total * SEG_MS + 300;
     FIELDS.forEach((_, i) => timers.push(window.setTimeout(() => setMarked(i + 1), parseStart + i * MARK_MS)));
     return () => timers.forEach(clearTimeout);
   }, [total]);
 
-  const entityOrder = (e?: Seg["entity"]) => (e ? FIELDS.findIndex((f) => f.key === e) : -1);
+  const order = (e?: Kind) => (e ? FIELDS.findIndex((f) => f.key === e) : -1);
   const done = marked === FIELDS.length;
 
   return (
-    <figure className="rounded-xl border border-rule bg-panel p-5 sm:p-6" aria-label="Example: a voice-agent call turned into a structured daily report">
-      <div className="flex items-center justify-between gap-3 text-sm text-muted">
-        <span>Daily report call</span>
-        <span className="inline-flex items-center gap-2" aria-live="polite">
-          <span className={`size-2 rounded-full ${done ? "bg-signal" : "animate-pulse bg-ai"}`} aria-hidden />
-          {done ? "Filed" : "Parsing"}
+    <figure className="call" aria-label="Example: a voice-agent call turned into a structured daily report">
+      <div className="call__top">
+        <span className="inline-flex items-center gap-3">
+          <span className="wave" data-done={done ? "true" : "false"} aria-hidden>
+            {BARS.map((h, i) => (
+              <i key={i} style={{ height: h, animationDelay: `${i * 90}ms` }} />
+            ))}
+          </span>
+          daily_report_call.wav
+        </span>
+        <span className={`inline-flex items-center gap-2 ${done ? "text-lime" : ""}`} aria-live="polite">
+          {done ? <span className="dot" aria-hidden /> : null}
+          {done ? "filed" : "parsing…"}
         </span>
       </div>
 
-      <p className="mt-4 font-jp text-[1.0625rem] leading-[1.9] text-ink" lang="ja">
+      <p className="mt-5 font-jp text-[1.0625rem] leading-[1.95] text-ink" lang="ja">
         {SEGMENTS.map((s, i) => {
-          const order = entityOrder(s.entity);
+          const o = order(s.entity);
           return (
             <span key={i} className="seg" data-shown={i < shown ? "true" : "false"}>
               {s.entity ? (
-                <span className="entity" data-marked={order > -1 && order < marked ? "true" : "false"}>
+                <span className="entity" data-kind={s.entity} data-marked={o > -1 && o < marked ? "true" : "false"}>
                   {s.text}
                 </span>
               ) : (
@@ -73,21 +82,25 @@ export default function CallToRecord() {
           );
         })}
       </p>
-      <p className="mt-1 text-sm text-muted">
+      <p className="mt-1 text-sm text-ink-mute">
         “Made three quotes today, then a one-hour client meeting in the afternoon. A bit tired.”
       </p>
 
-      <dl className="mt-5 border-t border-rule pt-4 font-mono text-[0.8125rem] leading-6 tabular-nums">
-        {FIELDS.map((f, i) => (
-          <div key={f.key} className="field grid grid-cols-[6.5rem_1fr] gap-3" data-shown={i < marked ? "true" : "false"}>
-            <dt className="text-muted">{f.label}</dt>
-            <dd className="text-ink">{f.value}</dd>
-          </div>
-        ))}
-      </dl>
-      <figcaption className="mt-4 text-xs leading-5 text-muted">
-        Illustrative example of the pipeline I built: a phone call becomes a structured report, analytics and an
-        early wellbeing signal.
+      <div className="mt-5 rounded-xl border border-line bg-bg/70 p-4 font-mono text-[0.8125rem] leading-6">
+        <p className="mb-1 text-ink-dim">{"{"} daily_report</p>
+        <dl>
+          {FIELDS.map((f, i) => (
+            <div key={f.key} className="field grid grid-cols-[6.5rem_1fr] gap-3 pl-4" data-shown={i < marked ? "true" : "false"}>
+              <dt className={f.color}>{f.key}:</dt>
+              <dd className="text-ink">&quot;{f.value}&quot;</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-1 text-ink-dim">{"}"}</p>
+      </div>
+      <figcaption className="mt-4 text-xs leading-5 text-ink-mute">
+        Illustrative example of the voice-agent pipeline I built: one phone call becomes a structured report,
+        analytics and an early wellbeing signal.
       </figcaption>
     </figure>
   );
