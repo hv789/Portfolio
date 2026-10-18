@@ -11,10 +11,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://harshavardhan-dev.vercel.app"),
   title: "Harsha Vardhan, AI Engineer | Agentic AI, Voice AI, Production LLM Systems",
   description:
-    "AI engineer building agentic systems, voice AI agents and production LLM systems for Japanese enterprises like NTT DATA, Toyota and Mitsubishi Motors.",
+    "AI engineer building agentic systems, voice AI agents and production LLM systems for enterprises, shipped to production.",
   openGraph: {
     title: "Harsha Vardhan, AI Engineer",
-    description: "Agentic systems, voice AI agents and production LLM systems for Japanese enterprises.",
+    description: "Agentic systems, voice AI agents and production LLM systems for enterprises, shipped to production.",
     url: "https://harshavardhan-dev.vercel.app",
     siteName: "Harsha Vardhan",
     type: "website",
